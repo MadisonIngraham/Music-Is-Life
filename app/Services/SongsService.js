@@ -3,13 +3,13 @@ import store from "../store.js";
 
 // @ts-ignore
 let _sandBox = axios.create({
-  //TODO Change YOURNAME to your actual name
-  baseURL: "//bcw-sandbox.herokuapp.com/api/YOURNAME/songs"
+  baseURL: "//bcw-sandbox.herokuapp.com/api/madi-ingy/songs"
 });
 
 class SongsService {
   constructor() {
     // NOTE this will get your songs on page load
+
     this.getMySongs();
   }
 

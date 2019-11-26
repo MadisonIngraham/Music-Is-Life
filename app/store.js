@@ -56,6 +56,7 @@ class Store {
     _validateProp(prop);
     _validateSubscriber(fn, prop);
     _listeners[prop].push(fn);
+    console.log(_listeners);
   }
 
   /**
@@ -67,6 +68,7 @@ class Store {
     _validateProp(prop);
     _state[prop] = data;
     _listeners[prop].forEach(fn => fn());
+    console.log(_state);
   }
 }
 

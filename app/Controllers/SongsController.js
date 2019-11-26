@@ -1,16 +1,23 @@
-import store from "../store.js";
+import _store from "../store.js";
 import SongService from "../Services/SongsService.js";
 
 //Private
-/**Draws the Search results to the page */
-function _drawResults() {}
+
+function _drawResults() {
+  let template = "";
+  let songs = _store.State.songs;
+  songs.forEach(song => (template += song.Template));
+  document.querySelector("#results").innerHTML = template;
+}
+
 /**Draws the Users saved songs to the page */
 function _drawPlaylist() {}
 
 //Public
 export default class SongsController {
   constructor() {
-    //TODO Don't forget to register your subscribers
+    _store.subscribe("songs", _drawResults);
+    _drawResults();
   }
 
   /**Takes in the form submission event and sends the query to the service */
