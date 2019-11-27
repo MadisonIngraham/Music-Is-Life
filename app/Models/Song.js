@@ -24,7 +24,7 @@ export default class Song {
                       <h6 class="card-title">${this.title} by ${this.artist}</h6>
                       </div>
 
-                      <button type="button" class="btn btn-primary btn-sm">Play Song</button>
+                      <button type="button" class="btn btn-secondary btn-sm">Play Song</button>
 
                     </div>
                   </div>
