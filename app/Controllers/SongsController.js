@@ -20,8 +20,7 @@ function _showLoading () {
 /** Draws the Users saved songs to the page */
 function _drawPlaylist () {
   let template = ''
-  let songs = _store.State.playlist
-  songs.forEach(song => (template += song.Template))
+  store.State.playlist.forEach(song => (template += song.playlistTemplate))
   document.querySelector('#playlist').innerHTML = template
 }
 
@@ -29,6 +28,7 @@ function _drawPlaylist () {
 export default class SongsController {
   constructor () {
     _store.subscribe('songs', _drawResults)
+    _store.subscribe('playlist', _drawPlaylist)
     _drawResults()
     _drawPlaylist()
   }
@@ -57,7 +57,9 @@ export default class SongsController {
    * Takes in a song id to be removed from the users playlist and sends it to the server
    * @param {string} id
    */
-  removeSong (id) {}
+  removeSong (id) {
+    SongService.removeSong(id)
+  }
 
   playSong (id, fromPlaylist) {
     let song

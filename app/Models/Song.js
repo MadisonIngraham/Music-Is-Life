@@ -43,38 +43,51 @@ export default class Song {
 
   get previewTemplate () {
     return `
+    <preview>
+
+    <div>
     <h4>Now Playing</h4>
+    </div>
+
+    <div>
             <img src=${this.albumArt} id="playing-art"></img>
+            </div>
+            
+            <div>
             <h2>${this.title} by ${this.artist}</h2>
             <audio src="${this.preview}" controls autoplay="true"></audio>
             <h5>
               Buy: $${this.price} | ${this.album}
             </h5>
+            </div>
+
+    </preview>
     `
   }
 
   get playlistTemplate () {
     return `
     <div class="card border-primary m-3" style="width: 15rem;">
-                    <div class="card-body d-flex flex-column">
+    <div class="card-body d-flex flex-column">
 
-                    <div class="d-flex justify-content-center mb-2">
-                      <img src=${this.albumArt}></img>
-                      </div>
+    <div class="d-flex justify-content-center mb-2">
+      <img src=${this.albumArt}></img>
+      </div>
 
-                      <div class="d-flex justify-content-center text-center">
-                      <h6 class="card-title">${this.title} by ${
-  this.artist
-}</h6>
-                      </div>
+      <div class="d-flex justify-content-center text-center">
+      <h6 class="card-title">${this.title} by ${this.artist}</h6>
+      </div>
 
-                      <button type="button" class="btn btn-secondary btn-sm" onclick="app.songsController.playSong('${
+      <button type="button" class="btn btn-secondary btn-sm" onclick="app.songsController.playSong('${
   this._id
 }', true)"> Play Song </button>
 
-                    </div>
-                  </div>
-            </results>
+<button type="button" class="btn btn-secondary btn-sm" onclick="app.songsController.removeSong('${
+  this._id
+}')"> Remove Song </button>
+
+    </div>
+  </div> 
         `
   }
 }
