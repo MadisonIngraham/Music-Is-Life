@@ -1,48 +1,49 @@
-import Song from "../Models/Song.js";
-import store from "../store.js";
+import Song from '../Models/Song.js'
+import store from '../store.js'
 
 // @ts-ignore
 let _sandBox = axios.create({
-  baseURL: "//bcw-sandbox.herokuapp.com/api/madi-ingy/songs"
-});
+  baseURL: '//bcw-sandbox.herokuapp.com/api/Madi-Ingraham/songs'
+})
 
 class SongsService {
-  constructor() {
+  constructor () {
     // NOTE this will get your songs on page load
-    this.getMySongs();
+    this.getMySongs()
   }
 
   /**
    * Takes in a search query and retrieves the results that will be put in the store
    * @param {string} query
    */
-  getMusicByQuery(query) {
-    //NOTE You will not need to change this method
-    let url = "https://itunes.apple.com/search?callback=?&term=" + query;
+  getMusicByQuery (query) {
+    // NOTE You will not need to change this method
+    let url = 'https://itunes.apple.com/search?callback=?&term=' + query
     // @ts-ignore
     $.getJSON(url)
       .then(res => {
-        let results = res.results.map(rawData => new Song(rawData));
-        store.commit("songs", results);
+        let results = res.results.map(rawData => new Song(rawData))
+        store.commit('songs', results)
       })
       .catch(err => {
-        throw new Error(err);
-      });
+        throw new Error(err)
+      })
   }
 
   /**
    * Retrieves the saved list of songs from the sandbox
    */
-  getMySongs() {
+  getMySongs () {
     _sandBox
       .get()
       .then(res => {
-        //TODO What are you going to do with this result
-        let results = res.results.map(rawData => new Song(rawData));
+        // TODO What are you going to do with this result
+        let results = res.data.data.map(rawData => new Song(rawData))
+        store.commit('playlist', results)
       })
       .catch(error => {
-        throw new Error(error);
-      });
+        throw new Error(error)
+      })
   }
 
   /**
@@ -50,9 +51,18 @@ class SongsService {
    * Afterwords it will update the store to reflect saved info
    * @param {string} id
    */
-  addSong(id) {
-    //TODO you only have an id, you will need to find it in the store before you can post it
-    //TODO After posting it what should you do?
+  addSong (id) {
+    let song = store.State.songs.find(s => s._id == id)
+    _sandBox
+      .post('', song)
+      .then(res => {
+        let newSong = new Song(res.data.data)
+        store.State.playlist.push(newSong)
+        store.commit('playlist', store.State.playlist)
+      })
+      .catch(e => {
+        throw e
+      })
   }
 
   /**
@@ -60,10 +70,10 @@ class SongsService {
    * Afterwords it will update the store to reflect saved info
    * @param {string} id
    */
-  removeSong(id) {
-    //TODO Send the id to be deleted from the server then update the store
+  removeSong (id) {
+    // TODO Send the id to be deleted from the server then update the store
   }
 }
 
-const service = new SongsService();
-export default service;
+const service = new SongsService()
+export default service

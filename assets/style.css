@@ -10613,6 +10613,6 @@ a.text-dark:hover, a.text-dark:focus {
 }
 
 #now-playing {
-  width: 500px;
+  position: fixed; 
 }
 
